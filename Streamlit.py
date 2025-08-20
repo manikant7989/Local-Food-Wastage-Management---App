@@ -6,8 +6,8 @@ from contextlib import closing
 
 DB_PATH = "Local_Food_Wastage.db"  # make sure this matches your DB file
 
-st.set_page_config(page_title="Local Food Wastage Management", layout="wide")
-st.title("Local Food Wastage Management System")
+st.set_page_config(page_title="Local Food Wastage Management 🍽️", layout="wide")
+st.title("Local Food Wastage Management System 🍽️")
 
 # --- Helper functions
 @st.cache_data(show_spinner=False)
