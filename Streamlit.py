@@ -5,7 +5,7 @@ import altair as alt
 import plotly.express as px
 from contextlib import closing
 
-DB_PATH = "local_food_wastage.db"   # ✅ Make sure this matches your DB filename
+DB_PATH = "Local_Food_Wastage.db"   # ✅ Make sure this matches your DB filename
 
 # --- App Config ---
 st.set_page_config(page_title="Local Food Wastage Management", layout="wide")
