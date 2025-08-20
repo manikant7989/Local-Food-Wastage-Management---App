@@ -26,11 +26,12 @@ def exec_write(sql, params=None):
 # --- Sidebar Filters ---
 st.sidebar.header("🔎 Filters")
 
-cities = run_query("SELECT DISTINCT City AS city FROM providers ORDER BY city")["city"].dropna().tolist()
-provider_types = run_query("SELECT DISTINCT Type AS provider_type FROM providers ORDER BY provider_type")["provider_type"].dropna().tolist()
-food_types = run_query("SELECT DISTINCT Food_Type AS food_type FROM food_listings ORDER BY food_type")["food_type"].dropna().tolist()
-meal_types = run_query("SELECT DISTINCT Meal_Type AS meal_type FROM food_listings ORDER BY meal_type")["meal_type"].dropna().tolist()
-claim_statuses = run_query("SELECT DISTINCT Status AS status FROM claims ORDER BY status")["status"].dropna().tolist()
+cities = run_query("SELECT DISTINCT City AS city FROM providers ORDER BY City")["city"].dropna().tolist()
+provider_types = run_query("SELECT DISTINCT Type AS provider_type FROM providers ORDER BY Type")["provider_type"].dropna().tolist()
+food_types = run_query("SELECT DISTINCT Food_Type AS food_type FROM food_listings ORDER BY Food_Type")["food_type"].dropna().tolist()
+meal_types = run_query("SELECT DISTINCT Meal_Type AS meal_type FROM food_listings ORDER BY Meal_Type")["meal_type"].dropna().tolist()
+claim_statuses = run_query("SELECT DISTINCT Status AS status FROM claims ORDER BY Status")["status"].dropna().tolist()
+
 
 city_f = st.sidebar.multiselect("City", cities)
 ptype_f = st.sidebar.multiselect("Provider Type", provider_types)
