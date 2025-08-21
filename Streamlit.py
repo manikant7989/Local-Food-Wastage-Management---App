@@ -93,6 +93,76 @@ with right:
         )
     else:
         st.info("No listings found.")
+# --- Extra EDA Visualizations ---
+st.subheader("📊 Exploratory Data Analysis (EDA)")
+
+eda1, eda2 = st.columns(2)
+
+# Food Types Distribution
+foodtype_df = run_query("""
+    SELECT Food_Type, COUNT(*) AS count
+    FROM food_listings
+    GROUP BY Food_Type
+    ORDER BY count DESC
+""")
+with eda1:
+    st.markdown("**Most Common Food Types**")
+    st.plotly_chart(
+        px.bar(foodtype_df, x="Food_Type", y="count", text="count", color="count"),
+        use_container_width=True
+    )
+
+# Meal Type Distribution
+mealtype_df = run_query("""
+    SELECT Meal_Type, COUNT(*) AS count
+    FROM food_listings
+    GROUP BY Meal_Type
+    ORDER BY count DESC
+""")
+with eda2:
+    st.markdown("**Meal Type Distribution**")
+    st.plotly_chart(
+        px.pie(mealtype_df, names="Meal_Type", values="count", title="Meal Type Share"),
+        use_container_width=True
+    )
+
+eda3, eda4 = st.columns(2)
+
+# Claims by Receiver
+receiver_claims = run_query("""
+    SELECT r.Name AS Receiver, COUNT(c.Claim_ID) AS claims
+    FROM claims c
+    JOIN receivers r ON r.Receiver_ID = c.Receiver_ID
+    GROUP BY r.Name
+    ORDER BY claims DESC
+    LIMIT 10
+""")
+with eda3:
+    st.markdown("**Top 10 Receivers by Claims**")
+    st.altair_chart(
+        alt.Chart(receiver_claims).mark_bar().encode(
+            x=alt.X("Receiver:N", sort="-y"),
+            y="claims:Q",
+            tooltip=["Receiver","claims"]
+        ),
+        use_container_width=True
+    )
+
+# Providers with Most Listings
+provider_listings = run_query("""
+    SELECT p.Name AS Provider, COUNT(fl.Food_ID) AS listings
+    FROM food_listings fl
+    JOIN providers p ON p.Provider_ID = fl.Provider_ID
+    GROUP BY p.Name
+    ORDER BY listings DESC
+    LIMIT 10
+""")
+with eda4:
+    st.markdown("**Top 10 Providers by Listings**")
+    st.plotly_chart(
+        px.bar(provider_listings, x="Provider", y="listings", text="listings", color="listings"),
+        use_container_width=True
+    )
 
 st.divider()
 
